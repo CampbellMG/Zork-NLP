@@ -3,6 +3,9 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react"
 import "./App.css"
 import { submitCommand } from "./game/Game"
 
+import nlp from "compromise"
+import nlpAdjectives from "compromise-adjectives"
+
 type HeaderProps = {
     moves: number
     score: number
@@ -29,7 +32,31 @@ const App = () => {
     const [room, setRoom] = useState("")
 
     const submit = () => {
-        const state = submitCommand(input)
+        const terms = nlp(input)
+
+        const action = terms.verbs().first().text()
+        const object = terms.nouns().first().text()
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const adjective = terms.adjectives().first().text()
+        let command = action
+
+        if (object) {
+            command += " " + object
+        }
+
+        if (adjective) {
+            command += " " + adjective
+        }
+
+        console.log(input)
+        console.log(terms.json())
+        console.log(action)
+        console.log(object)
+        console.log(adjective)
+        console.log(command)
+
+        const state = submitCommand(command)
 
         const newHistory = [...history, "> " + input, state.output]
 
