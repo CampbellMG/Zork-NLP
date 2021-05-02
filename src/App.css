@@ -1,0 +1,57 @@
+div {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #090909;
+    color: #d3d3d3;
+}
+
+div::-webkit-scrollbar {
+    display: none;
+}
+
+input {
+    background-color: #090909;
+    border: 0px;
+    color: #d3d3d3;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12pt;
+    width: 80vw;
+    outline: 0;
+}
+
+.input {
+    padding-left: 16px;
+    padding-bottom: 16px;
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    padding: 10px;
+}
+
+.room {
+    flex: 1;
+}
+
+.content {
+    flex: 1;
+    padding-left: 16px;
+}
+
+.headerValue {
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #090909;
+    background-color: #d3d3d3;
+}
