@@ -1,10 +1,12 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 
 import "./App.css"
-import { submitCommand } from "./game/Game"
+import { getState, submitCommand } from "./game/Game"
 
-import nlp from "compromise"
+import compromise from "compromise"
 import nlpAdjectives from "compromise-adjectives"
+
+const nlp = compromise.extend(nlpAdjectives)
 
 type HeaderProps = {
     moves: number
@@ -36,9 +38,7 @@ const App = () => {
 
         const action = terms.verbs().first().text()
         const object = terms.nouns().first().text()
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const adjective = terms.adjectives().first().text()
+        const adjective = terms.adjectives().json()[0]?.text
         let command = action
 
         if (object) {
@@ -49,27 +49,31 @@ const App = () => {
             command += " " + adjective
         }
 
-        console.log(input)
-        console.log(terms.json())
-        console.log(action)
-        console.log(object)
-        console.log(adjective)
-        console.log(command)
+        submitCommand(command.trim())
 
-        const state = submitCommand(command)
+        updateState(input)
 
-        const newHistory = [...history, "> " + input, state.output]
+        setInput("")
+    }
+
+    const updateState = (command?: string) => {
+        const state = getState()
+        const currentHistory = command ? [...history, "> " + command] : history
+        const newHistory = [...currentHistory, state.output]
 
         setHistory(newHistory)
         setMoves(state.moves)
         setRoom(state.room)
         setScore(state.score)
-        setInput("")
     }
 
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
     })
+
+    useEffect(() => {
+        updateState()
+    }, [])
 
     return (
         <div className="wrapper">

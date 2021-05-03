@@ -97,7 +97,7 @@ export const rooms: Record<string, Room> = {
         look: "This is an open field west of a white house, with a boarded front door.\nThere is a small mailbox here.",
         items: [items.mat],
         visited: true,
-        roomIsDark: true
+        roomIsDark: false
     },
     behindHouse: {
         var_name: "behindHouse",

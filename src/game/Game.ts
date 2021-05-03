@@ -121,6 +121,8 @@ function showItems() {
 }
 
 function look() {
+    console.log(room)
+
     if (!room.roomIsDark) {
         output += "" + room.name + "\n"
         output += room.look + "\n\n"
@@ -484,7 +486,9 @@ export function submitCommand(command: string) {
 
     output = ""
     parseCommand(command)
+}
 
+export function getState() {
     return {
         moves,
         output,
